@@ -30,6 +30,11 @@ func unpad(src []byte) ([]byte, error) {
 
 // Encrypt - encrypt base58(aes) with given key
 func Encrypt(key []byte, text []byte) ([]byte, error) {
+
+	if len(text) == 0 {
+		return nil, errors.New("cant encode empty bytes")
+	}
+
 	block, err := aes.NewCipher(key)
 	if err != nil {
 		return nil, err
@@ -51,6 +56,11 @@ func Encrypt(key []byte, text []byte) ([]byte, error) {
 
 // Decrypt - decrypt text base58(aes) with given cipher key
 func Decrypt(key []byte, text []byte) ([]byte, error) {
+
+	if len(text) == 0 {
+		return nil, errors.New("cant decode empty bytes")
+	}
+
 	block, err := aes.NewCipher(key)
 	if err != nil {
 		return nil, err
