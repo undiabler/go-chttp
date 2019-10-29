@@ -19,8 +19,11 @@ func pad(src []byte) []byte {
 
 func unpad(src []byte) ([]byte, error) {
 	length := len(src)
+	if length==0 {
+		return nil, errors.New("unpad zero error. This could happen when incorrect encryption key is used")
+	}
+	
 	unpadding := int(src[length-1])
-
 	if unpadding > length {
 		return nil, errors.New("unpad error. This could happen when incorrect encryption key is used")
 	}
